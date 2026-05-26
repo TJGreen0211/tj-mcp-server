@@ -16,8 +16,8 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    mcp_host: str = Field(default="127.0.0.1", description="HTTP bind host")
-    mcp_port: int = Field(default=8000, ge=1, le=65535, description="HTTP bind port")
+    mcp_host: str = Field(default="0.0.0.0", description="HTTP bind host")
+    mcp_port: int = Field(default=9000, ge=1, le=65535, description="HTTP bind port")
     headless: bool = Field(default=False, description="Run browser headless")
     log_level: str = Field(
         default="INFO",
