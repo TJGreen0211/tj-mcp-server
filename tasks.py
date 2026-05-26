@@ -3,27 +3,21 @@ from invoke.tasks import task
 
 @task
 def install(c):
-    """Install MCP package in editable mode with dev deps."""
-    c.run("pip install -e MCP/[dev]")
+    """Install package in editable mode with dev deps."""
+    c.run("pip install -e .[dev]")
 
 
-@task(optional=["host"], optional=["port"])
+@task(optional=["host", "port"])
 def run(c, host: str = "127.0.0.1", port: int = 8000):
     """Run the Playwright MCP server."""
-    env = f"MCP_HOST={host} MCP_PORT={port}"
-    c.run(f"{env} python MCP/run.py")
-
-
-@task
-def run_root(c):
-    """Run the simple root MCP server."""
-    c.run("python -m src.main")
-
-
-@task
-def tests(c):
-    """Run pytest for the MCP subproject."""
-    c.run("python -m pytest MCP/tests -v")
+    c.run(
+        "python -m playwright_mcp.main",
+        env={
+            "PYTHONPATH": "src",
+            "MCP_HOST": host,
+            "MCP_PORT": str(port),
+        },
+    )
 
 
 @task
@@ -40,14 +34,14 @@ def setup(c):
 
 @task
 def lint(c):
-    """Run flake8 on MCP source."""
-    c.run("flake8 MCP/src/")
+    """Run flake8 on source."""
+    c.run("flake8 src/")
 
 
 @task
 def format(c):
-    """Run Black formatter on MCP source."""
-    c.run("black MCP/src/ MCP/tests/")
+    """Run Black formatter on source."""
+    c.run("black src/")
 
 
 @task(lint, format)
