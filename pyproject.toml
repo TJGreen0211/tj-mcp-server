@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "playwright-mcp"
+version = "0.1.0"
+description = "FastMCP server with Playwright for browser automation and web scraping"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp>=2.0",
+    "playwright>=1.40",
+    "pydantic-settings>=2.0",
+    "structlog>=24.0",
+]
+
+[project.scripts]
+playwright-mcp = "playwright_mcp.main:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
