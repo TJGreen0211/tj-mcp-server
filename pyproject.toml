@@ -17,8 +17,6 @@ dependencies = [
 
 [project.scripts]
 playwright-mcp = "playwright_mcp.main:main"
-memory-mcp = "memory.main:main"
-sqlite-mcp = "sqlite.main:main"
 
 [project.optional-dependencies]
 dev = [

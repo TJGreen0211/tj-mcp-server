@@ -8,36 +8,10 @@ def install(c):
 
 
 @task(optional=["host", "port"])
-def run_playwright(c, host: str = "0.0.0.0", port: int = 9000):
+def run(c, host: str = "0.0.0.0", port: int = 9000):
     """Run the Playwright MCP server."""
     c.run(
         "python -m playwright_mcp.main",
-        env={
-            "PYTHONPATH": "src",
-            "MCP_HOST": host,
-            "MCP_PORT": str(port),
-        },
-    )
-
-
-@task(optional=["host", "port"])
-def run_memory(c, host: str = "0.0.0.0", port: int = 9001):
-    """Run the Memory MCP server."""
-    c.run(
-        "python -m memory.main",
-        env={
-            "PYTHONPATH": "src",
-            "MCP_HOST": host,
-            "MCP_PORT": str(port),
-        },
-    )
-
-
-@task(optional=["host", "port"])
-def run_sqlite(c, host: str = "0.0.0.0", port: int = 9002):
-    """Run the SQLite MCP server."""
-    c.run(
-        "python -m sqlite.main",
         env={
             "PYTHONPATH": "src",
             "MCP_HOST": host,
