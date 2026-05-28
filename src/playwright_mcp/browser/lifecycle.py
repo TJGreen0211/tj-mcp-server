@@ -5,6 +5,7 @@ from fastmcp.server.lifespan import lifespan
 from playwright_mcp.browser.state import BrowserState
 from playwright_mcp.config import get_settings
 from playwright_mcp.logging_ import get_logger
+from playwright_mcp.memory.store import KnowledgeGraphManager
 
 logger = get_logger(__name__)
 
@@ -14,6 +15,7 @@ async def create_browser_lifespan(server: object) -> dict:
     """Start Playwright and one browser/context/page; yield state for tools. Teardown on exit."""
     settings = get_settings()
     state = BrowserState()
+    memory = KnowledgeGraphManager()
     try:
         from playwright.async_api import async_playwright
 
@@ -27,7 +29,7 @@ async def create_browser_lifespan(server: object) -> dict:
         page = await context.new_page()
         state.set_page(page)
         logger.info("Browser ready")
-        yield {"browser_state": state, "logger": logger}
+        yield {"browser_state": state, "logger": logger, "memory": memory}
     finally:
         logger.info("Closing browser")
         await state.close()

@@ -1,14 +1,13 @@
-"""Environment-based settings. No logging or browser logic."""
+"""Environment-based settings for the SQLite MCP server."""
 
 from functools import lru_cache
-from typing import Literal
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    """Server and browser settings loaded from environment."""
+    """SQLite server settings loaded from environment."""
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -17,24 +16,16 @@ class Settings(BaseSettings):
     )
 
     mcp_host: str = Field(default="0.0.0.0", description="HTTP bind host")
-    mcp_port: int = Field(default=9000, ge=1, le=65535, description="HTTP bind port")
-    headless: bool = Field(default=False, description="Run browser headless")
+    mcp_port: int = Field(default=9002, ge=1, le=65535, description="HTTP bind port")
     log_level: str = Field(
         default="INFO",
         description="Log level: DEBUG, INFO, WARNING, ERROR",
     )
     log_json: bool = Field(default=False, description="Output logs as JSON")
-    memory_file_path: str = Field(
-        default="",
-        description="Path to memory.jsonl file; defaults to package dir/memory.jsonl",
-    )
     sqlite_db_path: str = Field(
         default="",
         description="Path to SQLite database file; set via SQLITE_DB_PATH env var",
     )
-
-
-LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR"]
 
 
 @lru_cache
