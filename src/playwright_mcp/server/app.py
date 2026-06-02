@@ -15,7 +15,7 @@ def create_app() -> FastMCP:
         instructions=(
             "Browser automation, web scraping, persistent memory, and SQLite database exploration. "
             "Use the tools to navigate, click, type, fill forms, take screenshots, and extract content "
-            "from pages. For data extraction use browser_scrape with format 'text', 'html', or 'links'. "
+            "from pages. For data extraction use browser_scrape with mode 'text', 'main', 'accessible', or 'headings'. "
             "The knowledge graph memory tools (create_entities, create_relations, add_observations, "
             "search_nodes, open_nodes, read_graph, delete_*) provide persistent structured storage. "
             "The SQLite tools (read_query, list_tables, describe_table) allow querying a SQLite database "
